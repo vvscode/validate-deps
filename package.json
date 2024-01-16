@@ -1,0 +1,12 @@
+{
+  "name": "validate-peerdeps",
+  "version": "1.0.0",
+  "description": "Validate peer dependencies in your projects",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Vasil Vanchuk <v.vanchuk@tut.by>",
+  "license": "ISC"
+}
