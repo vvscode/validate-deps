@@ -6,23 +6,27 @@
   "license": "ISC",
   "author": "Vasil Vanchuk <v.vanchuk@tut.by>",
   "type": "module",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "build": "esbuild src/index.ts --bundle --outdir=dist",
-    "prepare": "husky install",
+    "build": "esbuild src/index.ts --bundle --platform=node --format=esm --outdir=dist",
     "lint:types": "npx tsc --noEmit && :",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepare": "husky install",
+    "dev": "npm run build && node dist/index.js"
   },
   "lint-staged": {
     "*.{js,ts}": "npx prettier --write",
     "*.ts": "npm run lint:types"
   },
+  "dependencies": {},
   "devDependencies": {
     "@types/node": "^20.11.4",
+    "@types/yargs": "^17.0.32",
     "esbuild": "^0.19.11",
+    "glob": "^10.3.10",
     "husky": "^8.0.3",
     "lint-staged": "^15.2.0",
     "prettier": "^3.2.2",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "yargs": "^17.7.2"
   }
 }
