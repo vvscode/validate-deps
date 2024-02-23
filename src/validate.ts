@@ -52,30 +52,48 @@ export function validatePeerDeps({
       const deps = pkg[dependencyType];
 
       for (let dependencyName in deps) {
-        const packageJsonPath = resolvePackagePath(dependencyName, pkgFileName);
+        try {
+          const packageJsonPath = resolvePackagePath(
+            dependencyName,
+            pkgFileName,
+          );
 
-        if (!packageJsonPath) {
+          if (!packageJsonPath) {
+            errors.push({
+              packageJsonPath: relativePkgFileName,
+              dependencyName,
+              dependencyType,
+              dependencyExpectation: deps[dependencyName],
+              dependencyActual: null,
+              errorType: "missed",
+            });
+            continue;
+          }
+
+          const { version } = require(packageJsonPath);
+
+          if (!semver.satisfies(version, deps[dependencyName])) {
+            errors.push({
+              packageJsonPath: relativePkgFileName,
+              dependencyName,
+              dependencyType,
+              dependencyExpectation: deps[dependencyName],
+              dependencyActual: version,
+              errorType: "mismatch",
+            });
+            continue;
+          }
+        } catch (error) {
           errors.push({
             packageJsonPath: relativePkgFileName,
             dependencyName,
             dependencyType,
             dependencyExpectation: deps[dependencyName],
             dependencyActual: null,
-            errorType: "missed",
-          });
-          continue;
-        }
-
-        const { version } = require(packageJsonPath);
-
-        if (!semver.satisfies(version, deps[dependencyName])) {
-          errors.push({
-            packageJsonPath: relativePkgFileName,
-            dependencyName,
-            dependencyType,
-            dependencyExpectation: deps[dependencyName],
-            dependencyActual: version,
-            errorType: "mismatch",
+            errorType: "other",
+            meta: {
+              error,
+            },
           });
         }
       }

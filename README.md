@@ -13,3 +13,6 @@ npx validate-deps --help
 # Typical usage to validate scope packages
 npx validate-deps --matchesToValidateDeps "@my-scope/*"
 ```
+
+To debug you can use `VALIDATE_PEERDEPS_LOG_LEVEL` environment variable (just set it to `debug` or `trace` and you'll see all the details).
+
