@@ -1,0 +1,31 @@
+name: build
+on: ['push', 'pull_request']
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [18, 20]
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Test and generate coverage
+        run: |
+          yarn install --frozen-lockfile
+          yarn run test:ci
+
+      - name: Coveralls
+        if: matrix.node == 18
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: ./.coverage/lcov.info

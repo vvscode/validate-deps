@@ -1,24 +1,25 @@
 {
-  "name": "validate-peerdeps",
-  "version": "1.0.0",
+  "name": "validate-deps",
+  "version": "0.1.0",
   "description": "Validate peer dependencies in your projects",
   "keywords": [],
   "license": "ISC",
   "author": "Vasil Vanchuk <v.vanchuk@tut.by>",
   "main": "dist/index.js",
+  "bin": "dist/index.js",
+  "files": [
+    "dist/"
+  ],
   "scripts": {
     "build": "esbuild src/index.ts --bundle --platform=node --format=cjs --outdir=dist",
+    "dev": "npm run build && node dist/index.js",
     "lint:types": "npx tsc --noEmit && :",
-    "prepare": "husky install",
-    "dev": "npm run build && node dist/index.js"
+    "prepare": "husky install"
   },
   "lint-staged": {
     "*.{js,ts}": "npx prettier --write",
     "*.ts": "npm run lint:types"
   },
-  "files": [
-    "dist/"
-  ],
   "devDependencies": {
     "@types/node": "^20.11.4",
     "@types/semver": "^7.5.7",
