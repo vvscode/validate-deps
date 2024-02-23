@@ -16,6 +16,9 @@
     "*.{js,ts}": "npx prettier --write",
     "*.ts": "npm run lint:types"
   },
+  "files": [
+    "dist/"
+  ],
   "devDependencies": {
     "@types/node": "^20.11.4",
     "@types/semver": "^7.5.7",
