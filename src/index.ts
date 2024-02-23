@@ -10,11 +10,17 @@ yargs(hideBin(process.argv))
     command: "$0",
     describe: "Check peer dependencies",
     builder: {
-      matches: {
-        describe: "Match (wildcard)",
+      matchesToValidateDeps: {
+        describe: "Matches (wildcard)",
         array: true,
         type: "string",
-        default: [],
+        demandOption: true,
+      },
+      validateDepsTypes: {
+        describe: "Types of dependencies to validate",
+        array: true,
+        type: "string",
+        default: ["peerDependencies"],
       },
     },
     handler: validatePeerDeps,
